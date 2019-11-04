@@ -156,5 +156,14 @@ module BitBucket
       response = request(:get, "/2.0/repositories/#{user}/#{repo.downcase}/pullrequests/#{pull_request_id}/comments/#{comment_id}", params)
       return response unless block_given?
     end
+
+    def delete_comment(user_name, repo_name, pull_request_id, comment_id, params = {})
+      _update_user_repo_params(user_name, repo_name)
+      _validate_user_repo_params(user, repo) unless user? && repo?
+      normalize! params
+
+      response = request(:delete, "/2.0/repositories/#{user}/#{repo.downcase}/pullrequests/#{pull_request_id}/comments/#{comment_id}", params)
+      return response unless block_given?
+    end
   end # Repos::Keys
 end # BitBucket
